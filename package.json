@@ -1,0 +1,17 @@
+{
+  "name": "@ldellisola/nushell",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "yaakcli build ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@yaakapp/cli": "^0.2.5",
+    "typescript": "^5.5.2",
+    "vitest": "^3.0.5"
+  },
+  "dependencies": {
+    "@yaakapp/api": "^0.5.3"
+  }
+}
