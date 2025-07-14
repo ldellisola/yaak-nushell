@@ -2,6 +2,7 @@
   "name": "@ldellisola/nushell",
   "private": true,
   "version": "0.0.1",
+  "description": "Copy request as a nushell http command",
   "scripts": {
     "build": "yaakcli build ./src/index.ts"
   },
