@@ -1,7 +1,7 @@
 {
   "name": "@ldellisola/nushell",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Copy request as a nushell http command",
   "scripts": {
     "build": "yaakcli build ./src/index.ts"
@@ -11,12 +11,12 @@
     "url": "https://github.com/ldellisola/yaak-nushell.git"
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "@yaakapp/cli": "^0.2.5",
-    "typescript": "^5.5.2",
-    "vitest": "^3.0.5"
+    "@types/node": "^24.2.0",
+    "@yaakapp/cli": "^0.3.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@yaakapp/api": "^0.5.3"
+    "@yaakapp/api": "^0.6.6"
   }
 }

@@ -46,22 +46,31 @@ export async function convertToNushellHttp(request: HttpRequest) {
 
   addHeaders(
     xs,
+    request.method,
     (request.headers ?? []).filter(onlyEnabled),
     parseAuthentication(request),
   );
+
+  addBody(xs, request);
+
+  xs.push("--raw");
+  xs.push("--allow-errors");
+  return xs.join(" ").replace(/\n/g, String.fromCharCode(13));
+}
+
+function addBody(xs: string[], request: HttpRequest) {
+  if (request.method?.toLowerCase() === "get") return;
 
   if (request.bodyType === "application/x-www-form-urlencoded")
     xs.push(formatBodyAsUrlEncoded(request));
   else if (request.bodyType === "multipart/form-data")
     xs.push(formatBodyAsFormData(request));
-  else if (typeof request.body?.query === "string")
+  else if (request.bodyType === null) {
+    // ignore body
+  } else if (typeof request.body?.query === "string")
     xs.push(formatBodyAsGraphQl(request));
   else if (typeof request.body?.text === "string")
     xs.push(`r#'\n${request.body.text}\n'#`);
-
-  xs.push("--raw");
-  xs.push("--allow-errors");
-  return xs.join(" ").replace(/\n/g, String.fromCharCode(13));
 }
 
 function formatBodyAsGraphQl(request: HttpRequest): string {
@@ -121,9 +130,13 @@ function addUrl(xs: string[], url: string, urlParameters: HttpUrlParameter[]) {
 
 function addHeaders(
   xs: string[],
+  method: string,
   headers: HttpRequestHeader[],
   authentication?: Authentication,
 ) {
+  if (method.toLowerCase() === "get")
+    headers = headers.filter((t) => t.name.toLowerCase() !== "content-type");
+
   if (headers.length === 0 && !hasAuthenticationHeaders(authentication)) return;
 
   xs.push("--headers");
